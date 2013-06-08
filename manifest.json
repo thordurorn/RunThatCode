@@ -12,6 +12,7 @@
   "permissions": [
     "http://*.stackoverflow.com/*"
     ,"https://*.stackoverflow.com/*"
+    ,"http://*.ideone.com/ideone/Index/submit/*"
   ],
   "browser_action": {
     "default_icon": "/img/page-code-icon.png"
