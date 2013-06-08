@@ -10,14 +10,48 @@ runThatCodeIcon.attr('id', function(i) {
 		return 'runThatCodeIconId_'+(i+1);
 });
 
+function langToIdeone(lang){
+	lang.toLowerCase();
+	//TODO: add code that parses for spaces
+	var dict = {}; 
+	     dict["awk"]= 104; dict["bash"]= 28;
+	     dict["c"]= 11; dict["c#"]= 27; dict["c++"]= 34; dict["objective-c"]= 34;
+	     dict["java"]= 10; dict["java7"]= 55; dict["javascript"]= 35;
+	     dict["pascal"]= 2; 
+	     dict["perl"]= 3; dict["perl6"]= 54;
+	     dict["php"]= 29;
+	     dict["python"]= 4; dict["python3"]=  116;
+	     dict["vb.net"]= 101;
+	     dict["sql"]= 40;
+	return dict[lang];
+}
+
+function postAjax(inInfo){
+	var langCode = langToIdeone(inInfo.language);
+	$.ajax({
+  		type: "POST"
+  		,url: 'http://ideone.com/ideone/Index/submit/'
+  		,data: {	 "file": inInfo.code
+  				,"lang": langCode
+  				,"run": 1
+  				,"private": 0}
+  		,success: function(data){
+  						var theDiv = document.createElement('div');
+  						$(theDiv).appendTo('body').attr('id', "runThatCodeDisplayBox").html(data);
+  					}
+  		//,dataType: 'multipart/formdata'
+	});
+}
+
 function parseCodeElement(inElem){
 	theRslt = {};
 	theClass = "-Unknown";
+	//TODO: check if we have to add code that parses for spaces 
 	theClasses = (inElem.parent('pre').attr("class"));
 	if(theClasses !== undefined)
 		theClass = (theClasses.split(" "))[0];
 	theRslt.language = theClass.substring(theClass.search("-") + 1);
-	theRslt.code = inElem.text(); //.replace(/<\/?[^>]+>/gi, '');
+	theRslt.code = inElem.text(); 
 	thePos = inElem.offset();
 	theRslt.left = thePos.left;
 	theRslt.top = thePos.top;
@@ -34,4 +68,7 @@ $(runThatCodeIcon).click(function(event) {
 	var codeSnippet = $('#' + runThatCodeSnippetId);
 	var codeElementDescription = parseCodeElement(codeSnippet);
 	console.log(codeElementDescription);
+	console.log(postAjax(codeElementDescription));
+
 });
+
