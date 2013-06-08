@@ -1,1 +1,1 @@
-alert("haha");
+$('code').prepend('<img src="http://i41.tinypic.com/33mc50w.png" /><br />');
