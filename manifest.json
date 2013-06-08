@@ -4,16 +4,14 @@
   "name": "RunThatCode",
   "description": "Allows you to select a code on stackoverflow.com and run it automatically on ideone.",
   "version": "1.0",
-
+  
   "background": {
-    "persistent": false,
-    "scripts": ["js/jquery-2.0.2.min.js", "js/backgroundScript.js"]
+  	"page": "background.html"
   },
 
   "permissions": [
-    "http://*.stackoverflow.com/*",
-    "https://*.stackoverflow.com/*",
-    "http://ideone.com/*"
+    "http://*.stackoverflow.com/*"
+    ,"https://*.stackoverflow.com/*"
   ],
   "browser_action": {
     "default_icon": "/img/page-code-icon.png"
