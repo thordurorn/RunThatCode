@@ -6,14 +6,20 @@
   "version": "1.0",
 
   "permissions": [
-    "http://www.stackoverflow.com/"
-    ,"http://stackoverflow.com/"
-    ,"https://www.stackoverflow.com/"
-    ,"https://stackoverflow.com/"
-
+    "http://*.stackoverflow.com/*"
+    ,"https://*.stackoverflow.com/*"
   ],
   "browser_action": {
     "default_icon": "/img/page-code-icon.png"
     
-  }
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*.stackoverflow.com/*"
+      ],
+      "js": ["js/contentScript.js"]
+    }
+  ]
 }
