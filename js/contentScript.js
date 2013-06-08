@@ -1,4 +1,4 @@
-var codeSection = $('code');
+var codeSection = $('pre').children('code');
 var runThatCodeLogo = "http://i41.tinypic.com/33mc50w.png"
 codeSection.attr('id', function(i) {
 		return 'runThatCodeSnippetId_'+(i+1);
