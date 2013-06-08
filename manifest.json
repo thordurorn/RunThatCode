@@ -23,6 +23,7 @@
       "matches": [
         "http://*.stackoverflow.com/*"
       ],
+      "css": ["css/runthatcode.css"],
       "js": ["js/jquery-1.10.1.min.js","js/contentScript.js"]
     }
   ]

@@ -2,7 +2,7 @@ var codeSection = $('code');
 codeSection.attr('id', function(i) {
 		return 'runThatCodeSnippetId_'+(i+1);
 });
-codeSection.prepend('<img src="http://i41.tinypic.com/33mc50w.png" class="runThatCodeIcon" />');
+codeSection.prepend('<img src="http://i41.tinypic.com/33mc50w.png" class="runThatCodeIcon" alt="Run this code snippet" />');
 
 var runThatCodeIcon = $('.runThatCodeIcon');
 runThatCodeIcon.attr('id', function(i) {
