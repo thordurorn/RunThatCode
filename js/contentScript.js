@@ -1,8 +1,9 @@
 var codeSection = $('code');
+var runThatCodeLogo = "http://i41.tinypic.com/33mc50w.png"
 codeSection.attr('id', function(i) {
 		return 'runThatCodeSnippetId_'+(i+1);
 });
-codeSection.prepend('<img src="http://i41.tinypic.com/33mc50w.png" class="runThatCodeIcon" alt="Run this code snippet" />');
+codeSection.prepend('<img src="' + runThatCodeLogo + '" class="runThatCodeIcon" alt="Run this code snippet" />');
 
 var runThatCodeIcon = $('.runThatCodeIcon');
 runThatCodeIcon.attr('id', function(i) {
@@ -22,7 +23,6 @@ function parseCodeElement(inElem){
 	theRslt.top = thePos.top;
 	return theRslt;
 }
-
 
 $(runThatCodeIcon).click(function(event) {
 	var runThatCodeIconId = event.target.id;
