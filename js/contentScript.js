@@ -36,8 +36,8 @@ function postAjax(inInfo){
   				,"run": 1
   				,"private": 0}
   		,success: function(data){
-  						var theDiv = document.createElement('div');
-  						$(theDiv).appendTo('body').attr('id', "runThatCodeDisplayBox").html(data);
+  						//Todo: filter out the relevant html and remove ALOT of gunk
+  						$("#runThisCodeDialogMessage").append(data);
   					}
   		//,dataType: 'multipart/formdata'
 	});
@@ -58,17 +58,32 @@ function parseCodeElement(inElem){
 	return theRslt;
 }
 
+$("body").append('<div id="dialog" title="Results">'+
+	'<p id="runThisCodeDialogMessage"></p>' +
+	'</div>');
+
 $(runThatCodeIcon).click(function(event) {
 	var runThatCodeIconId = event.target.id;
 	console.log('Info: A RunThatCode icon was pressed.');
-	console.log('Info: RunThatCode icon is ' + runThatCodeIconId);
+	console.log('Info: RunThatCode icon is "' + runThatCodeIconId + '"');
 
 	var runThatCodeSnippetId = runThatCodeIconId.replace('runThatCodeIconId', 'runThatCodeSnippetId');
-	console.log('Info: runThatCodeSnippetId is ' + runThatCodeSnippetId);
+	console.log('Info: runThatCodeSnippetId is "' + runThatCodeSnippetId + '"');
 	var codeSnippet = $('#' + runThatCodeSnippetId);
 	var codeElementDescription = parseCodeElement(codeSnippet);
-	console.log(codeElementDescription);
-	console.log(postAjax(codeElementDescription));
-
+	console.log('Info: Code sent to ideone is "' + codeElementDescription + '"') ;
+	postAjax(codeElementDescription);
+	$("#runThisCodeDialogMessage").empty();
+	$("#runThisCodeDialogMessage").append(codeElementDescription.code);
+	$("#dialog").dialog(
+		{ buttons: [{
+			text: "Ok",
+			click: function() { $( this ).dialog( "close" ); }
+		}]},
+		{ width: "90%" },
+		{ height: "auto" },
+		{ modal: true }
+	);
+	
 });
 
