@@ -1,0 +1,9 @@
+pre code .runThatCodeIcon
+{
+	float:right;
+}
+
+.runThatCodeIcon
+{
+	cursor:pointer;
+}

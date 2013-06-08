@@ -23,7 +23,15 @@
       "matches": [
         "http://*.stackoverflow.com/*"
       ],
-      "js": ["js/contentScript.js"]
+      "css": [
+        "css/runthatcode.css"
+        ,"css/ui-lightness/jquery-ui-1.10.3.custom.min.css"
+      ],
+      "js": [
+        "js/jquery-1.10.1.min.js",
+        "js/contentScript.js",
+        "js/jquery-ui-1.10.3.custom.min.js"
+      ]
     }
   ]
 }
