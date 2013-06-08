@@ -35,9 +35,21 @@ function postAjax(inInfo){
   				,"lang": langCode
   				,"run": 1
   				,"private": 0}
-  		,success: function(data){
+  		,success: function(inData){
+  						var getDiv = function(inData, startTag){
+  							start = inData.indexOf(startTag);
+  							stop = inData.indexOf('</div>', start);
+  							return (inData.substring(start, stop + 6)).trim();
+  						}
+
   						//Todo: filter out the relevant html and remove ALOT of gunk
-  						$("#runThisCodeDialogMessage").append(data);
+  						theInfo = getDiv(inData, '<div id="info" class="view_box');
+  						theCode = getDiv(inData, '<div id="code" class="view_box');
+  						theErr = getDiv(inData, '<div id="err" class="view_box');
+  						theInOutErr = getDiv(inData, '<div id="inouterr" class="view_box');
+  						
+
+  						$("#runThisCodeDialogMessage").append(theInfo, theCode, theErr, theInOutErr);
   					}
   		//,dataType: 'multipart/formdata'
 	});
@@ -64,20 +76,17 @@ $("body").append('<div id="dialog" title="Results">'+
 
 $(runThatCodeIcon).click(function(event) {
 	var runThatCodeIconId = event.target.id;
-	console.log('Info: A RunThatCode icon was pressed.');
-	console.log('Info: RunThatCode icon is "' + runThatCodeIconId + '"');
-
 	var runThatCodeSnippetId = runThatCodeIconId.replace('runThatCodeIconId', 'runThatCodeSnippetId');
-	console.log('Info: runThatCodeSnippetId is "' + runThatCodeSnippetId + '"');
+	//console.log('Info: runThatCodeSnippetId is "' + runThatCodeSnippetId + '"');
 	var codeSnippet = $('#' + runThatCodeSnippetId);
 	var codeElementDescription = parseCodeElement(codeSnippet);
-	console.log('Info: Code sent to ideone is "' + codeElementDescription + '"') ;
-	postAjax(codeElementDescription);
+	console.log('Language:'  + (codeElementDescription.language));
+	console.log('TranslatesTo:'  + langToIdeone(codeElementDescription.language));
 	$("#runThisCodeDialogMessage").empty();
-	$("#runThisCodeDialogMessage").append(codeElementDescription.code);
+	postAjax(codeElementDescription);
 	$("#dialog").dialog(
 		{ buttons: [{
-			text: "Ok",
+			text: "Close",
 			click: function() { $( this ).dialog( "close" ); }
 		}]},
 		{ width: "90%" },
