@@ -4,6 +4,10 @@
   "name": "RunThatCode",
   "description": "Allows you to select a code on stackoverflow.com and run it automatically on ideone.",
   "version": "1.0",
+  
+  "background": {
+  	"page": "background.html"
+  },
 
   "permissions": [
     "http://*.stackoverflow.com/*"
