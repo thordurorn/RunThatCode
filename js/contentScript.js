@@ -1,9 +1,10 @@
 var codeSection = $('pre').children('code');
-var runThatCodeLogo = "http://i41.tinypic.com/33mc50w.png"
+var rtcLogo = "http://i41.tinypic.com/33mc50w.png"
+var rtcSpinnerUrl = "http://i39.tinypic.com/2cmof9t.gif";  //chrome.extension.getURL("/img/spinnerLarge.gif");
 codeSection.attr('id', function(i) {
 		return 'runThatCodeSnippetId_'+(i+1);
 });
-codeSection.prepend('<img src="' + runThatCodeLogo + '" class="runThatCodeIcon" alt="Run this code snippet" />');
+codeSection.prepend('<img src="' + rtcLogo + '" class="runThatCodeIcon" alt="Run this code snippet" />');
 
 var runThatCodeIcon = $('.runThatCodeIcon');
 runThatCodeIcon.attr('id', function(i) {
@@ -14,16 +15,20 @@ function langToIdeone(lang){
 	lang.toLowerCase();
 	//TODO: add code that parses for spaces
 	var dict = {}; 
-	     dict["awk"]= 104; dict["bash"]= 28;
-	     dict["c"]= 11; dict["c#"]= 27; dict["c++"]= 34; dict["objective-c"]= 34;
+	     //dict["awk"]= 104; dict["bash"]= 28;
+	     dict["c"]= 11; dict["cs"]= 27; dict["c++"]= 34; dict["objective-c"]= 34;
 	     dict["java"]= 10; dict["java7"]= 55; dict["javascript"]= 35;
-	     dict["pascal"]= 2; 
-	     dict["perl"]= 3; dict["perl6"]= 54;
+	     //dict["pascal"]= 2; 
+	     //dict["perl"]= 3; dict["perl6"]= 54;
 	     dict["php"]= 29;
 	     dict["python"]= 4; dict["python3"]=  116;
 	     dict["vb.net"]= 101;
 	     dict["sql"]= 40;
 	return dict[lang];
+}
+
+function getLangList(){
+
 }
 
 function postAjax(inInfo){
@@ -35,7 +40,7 @@ function postAjax(inInfo){
   				,"lang": langCode
   				,"run": 1
   				,"private": 0}
-  		,success: function(inData){
+  				,success: function(inData){
   						var getDiv = function(inData, startTag){
   							start = inData.indexOf(startTag);
   							stop = inData.indexOf('</div>', start);
@@ -48,7 +53,7 @@ function postAjax(inInfo){
   						theErr = getDiv(inData, '<div id="err" class="view_box');
   						theInOutErr = getDiv(inData, '<div id="inouterr" class="view_box');
   						
-
+  						$("#runThatCodeSpinnerImage").hide();
   						$("#runThisCodeDialogMessage").append(theInfo, theCode, theErr, theInOutErr);
   					}
   		//,dataType: 'multipart/formdata'
@@ -71,7 +76,8 @@ function parseCodeElement(inElem){
 }
 
 $("body").append('<div id="dialog" title="Results">'+
-	'<p id="runThisCodeDialogMessage"></p>' +
+	'<img src="' + rtcSpinnerUrl + '" id="runThatCodeSpinnerImage"/>' +
+	'<p id="runThisCodeDialogMessage"></div>' +
 	'</div>');
 
 $(runThatCodeIcon).click(function(event) {
@@ -83,6 +89,7 @@ $(runThatCodeIcon).click(function(event) {
 	console.log('Language:'  + (codeElementDescription.language));
 	console.log('TranslatesTo:'  + langToIdeone(codeElementDescription.language));
 	$("#runThisCodeDialogMessage").empty();
+	$("#runThatCodeSpinnerImage").show();
 	postAjax(codeElementDescription);
 	$("#dialog").dialog(
 		{ buttons: [{
