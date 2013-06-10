@@ -1,6 +1,8 @@
 var codeSection = $('pre').children('code');
 var rtcLogo = "http://i41.tinypic.com/33mc50w.png"
 var rtcSpinnerUrl = "http://i39.tinypic.com/2cmof9t.gif";  //chrome.extension.getURL("/img/spinnerLarge.gif");
+var codeSectionId = "";
+
 codeSection.attr('id', function(i) {
 		return 'runThatCodeSnippetId_'+(i+1);
 });
@@ -10,6 +12,15 @@ var runThatCodeIcon = $('.runThatCodeIcon');
 runThatCodeIcon.attr('id', function(i) {
 		return 'runThatCodeIconId_'+(i+1);
 });
+
+$("body").append('<div id="dialog" title="Results">'+
+	'<div id="runThisCodeDialogMessage"></div>' +
+	'<img src="' + rtcSpinnerUrl + '" id="runThatCodeSpinnerImage"/>' +
+	'</div>' +
+	'<div id="languageSelection"></div>');
+$("#runThatCodeSpinnerImage").hide();
+
+var languageSelection = $('#languageSelection');
 
 function langToIdeone(lang){
 	lang.toLowerCase();
@@ -32,7 +43,9 @@ function getLangList(){
 }
 
 function postAjax(inInfo){
-	var langCode = langToIdeone(inInfo.language);
+	//var langCode = langToIdeone(inInfo.language);
+	var langCode = $("#languageSelection option:selected").val();
+	console.log('Info: Selected language code is "' + langCode + '"');
 	$.ajax({
   		type: "POST"
   		,url: 'http://ideone.com/ideone/Index/submit/'
@@ -41,6 +54,17 @@ function postAjax(inInfo){
   				,"run": 1
   				,"private": 0}
   				,success: function(inData){
+	  					var getLink = function(inData, startTag){
+	  							start = inData.indexOf(startTag) + startTag.length;
+	  							stop = 24;
+	  							return (inData.substring(start, start+stop)).trim();
+	  						}
+  						$("#runThatCodeSpinnerImage").hide();
+						var stuff = getLink(inData,'<input type="text" id="link_presentation" value="');
+						console.log("Info: link_presentation value is '" + stuff + "'");
+  						window.open(stuff, '_blank');
+
+  						/* This code may be used in the netxt version:
   						var getDiv = function(inData, startTag){
   							start = inData.indexOf(startTag);
   							stop = inData.indexOf('</div>', start);
@@ -55,6 +79,7 @@ function postAjax(inInfo){
   						
   						$("#runThatCodeSpinnerImage").hide();
   						$("#runThisCodeDialogMessage").append(theInfo, theCode, theErr, theInOutErr);
+  						*/
   					}
   		//,dataType: 'multipart/formdata'
 	});
@@ -75,13 +100,32 @@ function parseCodeElement(inElem){
 	return theRslt;
 }
 
-$("body").append('<div id="dialog" title="Results">'+
-	'<img src="' + rtcSpinnerUrl + '" id="runThatCodeSpinnerImage"/>' +
-	'<p id="runThisCodeDialogMessage"></div>' +
-	'</div>');
-
 $(runThatCodeIcon).click(function(event) {
-	var runThatCodeIconId = event.target.id;
+    $(languageSelection).empty().hide().append(rtcLangDDwn);
+
+	var thisPos = $(this).position();
+	var thisHeight = $(this).height();
+	var thisWidth = $(this).width();
+	var ddnlistWidth = $(languageSelection).width();
+	var ddnListTop = thisPos.top + thisHeight;
+	var ddnListLeft = thisPos.left - ddnlistWidth + thisWidth;
+
+	$(languageSelection)
+		.animate({
+	    		'top': ddnListTop + 'px',
+	    		'left': ddnListLeft + 'px'
+	    	},
+	    	0,
+	    	function(){}
+    	)
+    	.show();
+
+	codeSectionId = $(this).attr('id');
+	console.log("Info: codeSectionId is '" + codeSectionId +"'");
+});
+
+$(languageSelection).change(function(event) {
+	var runThatCodeIconId = codeSectionId; //event.target.id;
 	var runThatCodeSnippetId = runThatCodeIconId.replace('runThatCodeIconId', 'runThatCodeSnippetId');
 	//console.log('Info: runThatCodeSnippetId is "' + runThatCodeSnippetId + '"');
 	var codeSnippet = $('#' + runThatCodeSnippetId);
@@ -91,7 +135,7 @@ $(runThatCodeIcon).click(function(event) {
 	$("#runThisCodeDialogMessage").empty();
 	$("#runThatCodeSpinnerImage").show();
 	postAjax(codeElementDescription);
-	$("#dialog").dialog(
+	/*$("#dialog").dialog(
 		{ buttons: [{
 			text: "Close",
 			click: function() { $( this ).dialog( "close" ); }
@@ -99,7 +143,6 @@ $(runThatCodeIcon).click(function(event) {
 		{ width: "90%" },
 		{ height: "auto" },
 		{ modal: true }
-	);
-	
+	);*/
+	$(languageSelection).empty().hide();
 });
-
