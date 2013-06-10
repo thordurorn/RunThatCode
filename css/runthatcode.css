@@ -1,6 +1,8 @@
 pre code .runThatCodeIcon
 {
 	float:right;
+	height: 24px;
+	height: 24px;
 }
 
 .runThatCodeIcon
@@ -11,4 +13,8 @@ pre code .runThatCodeIcon
 #languageSelection
 {
 	position: absolute;
+}
+
+.rtcDspNone{
+	display:none;
 }

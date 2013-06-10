@@ -66,4 +66,20 @@ var rtcLangDDwn = '<select name="lang" id="lang">' +
     '<option value="115" label="Unlambda"  title="Unlambda (unlambda-2.0.0)" >Unlambda</option>' +
     '<option value="101" label="VB.NET"  title="VB.NET (mono-2.4.2.3)" >VB.NET</option>' +
     '<option value="6" label="Whitespace"  title="Whitespace (wspace 0.3)" >Whitespace</option>' +
-'</select>'
+'</select>';
+var rtcLangDDwnCFamily = '<select name="lang" id="lang">' +
+    '<option value="11" label="C"  title="C (gcc-4.7.2)" >C</option>' +
+    '<option value="41" label="C++ 4.3.2"  title="C++ 4.3.2 (gcc-4.3.2)" >C++ 4.3.2</option>' +
+    '<option value="1" label="C++ 4.7.2"  title="C++ 4.7.2 (gcc-4.7.2)" >C++ 4.7.2</option>' +
+    '<option value="44" label="C++11"  title="C++11 (gcc-4.7.2)" >C++11</option>' +
+    '<option value="43" label="Objective-C"  title="Objective-C (gcc-4.5.1)" >Objective-C</option>' +
+'</select>';
+var rtcLangDDwnJava = '<select name="lang" id="lang">' +
+    '<option value="10" label="Java"  title="Java (sun-jdk-1.7.0_10)" >Java</option>' +
+    '<option value="55" label="Java7"  title="Java7 (sun-jdk-1.7.0_10)" >Java7</option>' +
+'</select>';
+var rtcLangDDwnJavascript = '<select name="lang" id="lang">' +
+    '<option value="35" label="JavaScript (rhino)"  title="JavaScript (rhino) (rhino-1.7R4)" >JavaScript (rhino)</option>' +
+    '<option value="112" label="JavaScript (spidermonkey)"  title="JavaScript (spidermonkey) (spidermonkey-1.7)" >JavaScript (spidermonkey)</option>' +
+    '<option value="56" label="Node.js"  title="Node.js (0.8.11)" >Node.js</option>' +
+'</select>';

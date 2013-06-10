@@ -1,5 +1,6 @@
 var codeSection = $('pre').children('code');
-var rtcLogo = "http://i41.tinypic.com/33mc50w.png"
+//var rtcLogo = "http://i41.tinypic.com/33mc50w.png";
+var rtcLogo = "http://i43.tinypic.com/311mjwj.png";
 var rtcSpinnerUrl = "http://i39.tinypic.com/2cmof9t.gif";  //chrome.extension.getURL("/img/spinnerLarge.gif");
 var codeSectionId = "";
 
@@ -16,13 +17,15 @@ runThatCodeIcon.attr('id', function(i) {
 $("body").append('<div id="dialog" title="Results">'+
 	'<div id="runThisCodeDialogMessage"></div>' +
 	'<img src="' + rtcSpinnerUrl + '" id="runThatCodeSpinnerImage"/>' +
+	//'<img src="' + rtcSpinnerUrl + '" id="runThatCodeSpinnerImage"/>' +
 	'</div>' +
-	'<div id="languageSelection"></div>');
 $("#runThatCodeSpinnerImage").hide();
+	'<div id="languageSelection" class="rtcDspNone"></div>');
 
 var languageSelection = $('#languageSelection');
 
 function langToIdeone(lang){
+<<<<<<< HEAD
 	lang.toLowerCase();
 	//TODO: add code that parses for spaces
 	var dict = {}; 
@@ -42,9 +45,12 @@ function getLangList(){
 
 }
 
+=======
+/**
 function postAjax(inInfo){
 	//var langCode = langToIdeone(inInfo.language);
 	var langCode = $("#languageSelection option:selected").val();
+>>>>>>> 675f56fb6cde19e88fb55ecc7766abe54e879b10
 	console.log('Info: Selected language code is "' + langCode + '"');
 	$.ajax({
   		type: "POST"
