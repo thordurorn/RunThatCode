@@ -54,6 +54,17 @@ function postAjax(inInfo){
   				,"run": 1
   				,"private": 0}
   				,success: function(inData){
+	  					var getLink = function(inData, startTag){
+	  							start = inData.indexOf(startTag) + startTag.length;
+	  							stop = 24;
+	  							return (inData.substring(start, start+stop)).trim();
+	  						}
+  						$("#runThatCodeSpinnerImage").hide();
+						var stuff = getLink(inData,'<input type="text" id="link_presentation" value="');
+						console.log("Info: link_presentation value is '" + stuff + "'");
+  						window.open(stuff, '_blank');
+
+  						/* This code may be used in the netxt version:
   						var getDiv = function(inData, startTag){
   							start = inData.indexOf(startTag);
   							stop = inData.indexOf('</div>', start);
@@ -68,6 +79,7 @@ function postAjax(inInfo){
   						
   						$("#runThatCodeSpinnerImage").hide();
   						$("#runThisCodeDialogMessage").append(theInfo, theCode, theErr, theInOutErr);
+  						*/
   					}
   		//,dataType: 'multipart/formdata'
 	});
@@ -123,7 +135,7 @@ $(languageSelection).change(function(event) {
 	$("#runThisCodeDialogMessage").empty();
 	$("#runThatCodeSpinnerImage").show();
 	postAjax(codeElementDescription);
-	$("#dialog").dialog(
+	/*$("#dialog").dialog(
 		{ buttons: [{
 			text: "Close",
 			click: function() { $( this ).dialog( "close" ); }
@@ -131,6 +143,6 @@ $(languageSelection).change(function(event) {
 		{ width: "90%" },
 		{ height: "auto" },
 		{ modal: true }
-	);
+	);*/
 	$(languageSelection).empty().hide();
 });
