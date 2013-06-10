@@ -1,6 +1,5 @@
 var codeSection = $('pre').children('code');
-//var rtcLogo = "http://i41.tinypic.com/33mc50w.png";
-var rtcLogo = "http://i43.tinypic.com/311mjwj.png";
+var rtcLogo = "http://i41.tinypic.com/33mc50w.png"
 var rtcSpinnerUrl = "http://i39.tinypic.com/2cmof9t.gif";  //chrome.extension.getURL("/img/spinnerLarge.gif");
 var codeSectionId = "";
 
@@ -16,13 +15,13 @@ runThatCodeIcon.attr('id', function(i) {
 
 $("body").append('<div id="dialog" title="Results">'+
 	'<div id="runThisCodeDialogMessage"></div>' +
-	//'<img src="' + rtcSpinnerUrl + '" id="runThatCodeSpinnerImage"/>' +
+	'<img src="' + rtcSpinnerUrl + '" id="runThatCodeSpinnerImage"/>' +
 	'</div>' +
-	'<div id="languageSelection" class="rtcDspNone"></div>');
+	'<div id="languageSelection"></div>');
+$("#runThatCodeSpinnerImage").hide();
 
 var languageSelection = $('#languageSelection');
 
-<<<<<<< HEAD
 function langToIdeone(lang) {
 	lang.toLowerCase();
 	//TODO: add code that parses for spaces
@@ -63,13 +62,6 @@ function postAjax(inInfo) {
 	if(langCode == undefined)
 		langCode = $("#languageSelection option:selected").val();
 
-=======
-/**
-*	Performs an HTTP Post containing the code to ideone.com 
-**/
-function postAjax(inInfo){
-	var langCode = $("#languageSelection option:selected").val();
->>>>>>> 675f56fb6cde19e88fb55ecc7766abe54e879b10
 	console.log('Info: Selected language code is "' + langCode + '"');
 	$.ajax({
   		type: "POST"
@@ -88,18 +80,29 @@ function postAjax(inInfo){
 						var stuff = getLink(inData,'<input type="text" id="link_presentation" value="');
 						console.log("Info: link_presentation value is '" + stuff + "'");
   						window.open(stuff, '_blank');
+
+  						/* This code may be used in the netxt version:
+  						var getDiv = function(inData, startTag){
+  							start = inData.indexOf(startTag);
+  							stop = inData.indexOf('</div>', start);
+  							return (inData.substring(start, stop + 6)).trim();
+  						}
+
+  						//Todo: filter out the relevant html and remove ALOT of gunk
+  						theInfo = getDiv(inData, '<div id="info" class="view_box');
+  						theCode = getDiv(inData, '<div id="code" class="view_box');
+  						theErr = getDiv(inData, '<div id="err" class="view_box');
+  						theInOutErr = getDiv(inData, '<div id="inouterr" class="view_box');
+  						
+  						$("#runThatCodeSpinnerImage").hide();
+  						$("#runThisCodeDialogMessage").append(theInfo, theCode, theErr, theInOutErr);
+  						*/
   					}
+  		//,dataType: 'multipart/formdata'
 	});
 }
 
-<<<<<<< HEAD
 function parseCodeElement(inElem) {
-=======
-/**
-*	Parses all usefull info from the SO <code> Element into an DTO
-**/
-function parseCodeElement(inElem){
->>>>>>> 675f56fb6cde19e88fb55ecc7766abe54e879b10
 	theRslt = {};
 	theClass = "-Unknown";
 	//TODO: check if we have to add code that parses for spaces 
@@ -116,7 +119,6 @@ function parseCodeElement(inElem){
 	return theRslt;
 }
 
-<<<<<<< HEAD
 function getCodeElementDescription() {
 	var runThatCodeIconId = codeSectionId;
     var runThatCodeSnippetId = runThatCodeIconId.replace('runThatCodeIconId', 'runThatCodeSnippetId');
@@ -178,56 +180,4 @@ $(runThatCodeIcon).click(function(event) {
 $(languageSelection).change(function(event) {
 	var codeElementDescription = getCodeElementDescription();
 	run(codeElementDescription);
-=======
-/**
-*	Event handler for  icon clicks
-**/
-$(runThatCodeIcon).click(function(event) {
-    $(languageSelection).empty().hide().append(rtcLangDDwn);
-
-	var thisPos = $(this).position();
-	var thisHeight = $(this).height();
-	var thisWidth = $(this).width();
-	$(this).hide();
-	var ddnlistWidth = $(languageSelection).width();
-	var ddnListTop = thisPos.top; // + thisHeight;
-	var ddnListLeft = thisPos.left - ddnlistWidth + thisWidth;
-
-	$(languageSelection)
-		.animate({
-	    		'top': ddnListTop + 'px',
-	    		'left': ddnListLeft + 'px'
-	    	},
-	    	0,
-	    	function(){}
-    	)
-    	.show().attr('size',8);
-
-	codeSectionId = $(this).attr('id');
-	//console.log("Info: codeSectionId is '" + codeSectionId +"'");
-});
-
-/**
-*	Event handler for selection, there is only one selection
-**/
-$(languageSelection).change(function(event) {
-	var runThatCodeIconId = codeSectionId; //event.target.id;
-	var runThatCodeSnippetId = runThatCodeIconId.replace('runThatCodeIconId', 'runThatCodeSnippetId');
-	//console.log('Info: runThatCodeSnippetId is "' + runThatCodeSnippetId + '"');
-	var codeSnippet = $('#' + runThatCodeSnippetId);
-	var codeElementDescription = parseCodeElement(codeSnippet);
-	//console.log('Language:'  + (codeElementDescription.language));
-	//console.log('TranslatesTo:'  + langToIdeone(codeElementDescription.language));
-	$("#runThisCodeDialogMessage").empty();
-	$("#runThatCodeSpinnerImage").show();
-	postAjax(codeElementDescription);
-	$(languageSelection).empty().hide();
-	$("img.runThatCodeIcon").show();
-
-});
-
-$('#languageSelection').mouseleave(function(e){
-	$('#languageSelection').hide();
-	$("img.runThatCodeIcon").show();
->>>>>>> 675f56fb6cde19e88fb55ecc7766abe54e879b10
 });
